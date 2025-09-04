@@ -1,0 +1,9 @@
+theme=light:tokyonight_day,dark:tokyonight_night
+font-family = "AdwaitaMono Nerd Font Mono"
+font-size=13
+alpha-blending=native
+background-opacity=0.87
+cursor-style=block
+cursor-style-blink=true
+auto-update=download
+auto-update-channel=tip
