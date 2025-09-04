@@ -105,5 +105,3 @@ Zsh (Z Shell) là một shell mạnh mẽ với nhiều tính năng hơn Bash. C
 -   **[Link bài viết về touchpad(bị gỡ) và bình luận](https://www.reddit.com/r/framework/comments/17z30p3/comment/kdywvuy/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)**
 
 ---
-
-**Hoàn tất!** Bạn đã cấu hình thành công môi trường Fedora của mình. Hãy mở terminal (Ghostty) và tận hưởng.
