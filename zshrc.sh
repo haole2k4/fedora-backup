@@ -12,9 +12,11 @@ zinit light zsh-users/zsh-completions #load completions
 #load completions
 autoload -U compinit && compinit
 
+
 # STARSHIP CONFIGURATIONS
 export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 eval "$(starship init zsh)"
+
 
 #HISTORY
 HISTSIZE=2500
@@ -31,3 +33,20 @@ setopt hist_find_no_dups
 
 #STYLING
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# pnpm
+export PNPM_HOME="/home/haole2k4/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+#java
+export JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
+export PATH="$JAVA_HOME/bin:$PATH"
+#java end
