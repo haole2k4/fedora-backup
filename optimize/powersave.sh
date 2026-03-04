@@ -5,6 +5,9 @@ echo "Switching to POWER SAVE mode..."
 # 1. Dừng scx_lavd (Scheduler này ưu tiên độ nhạy, có thể gây tốn pin hơn scheduler mặc định)
 sudo pkill -f scx_lavd
 
+sudo systemctl stop mysqld
+sudo systemctl stop postgresql
+
 # 2. Kích hoạt TLP đúng cách
 sudo systemctl enable --now tlp
 sudo tlp start

@@ -11,6 +11,10 @@ sudo pkill -f scx_lavd
 sleep 1
 sudo scx_lavd --performance &! 
 
+# 2. (do đã gỡ scx_lavd nên 2 trên ko cần, ngoài ra bổ sung)
+sudo systemctl start mysqld
+sudo systemctl start postgresql
+
 # 3. Ép CPU chạy ở chế độ Performance (Tối ưu cho kernel CachyOS)
 if [ -f /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ]; then
     echo "performance" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
