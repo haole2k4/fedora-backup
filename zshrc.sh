@@ -51,3 +51,15 @@ esac
 export JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
 export PATH="$JAVA_HOME/bin:$PATH"
 #java end
+
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# fnm
+# Đường dẫn cài đặt `fnm` để kiểm tra và thêm vào PATH nếu có tồn tại.
+FNM_PATH="/home/haole2k4/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  # Nạp cấu hình môi trường do `fnm` sinh ra cho shell zsh hiện tại.
+  eval "$(fnm env --shell zsh)"
+fi

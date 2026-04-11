@@ -14,9 +14,9 @@ sudo dnf upgrade --refresh
 sudo dnf install sl -y
 sl
 
-sudo dnf install dnfdragora #optional
+sudo dnf5 install dnfdragora #optional
 
-sudo dnf install multimedia
+sudo dnf5 install multimedia
 
 sudo dnf5 install gnome-tweaks
 

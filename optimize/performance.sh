@@ -30,4 +30,4 @@ done
 # 5. Services cho công việc
 sudo systemctl start docker.service docker.socket
 
-echo "Max Performance activated. scx_lavd is handling the load."
+echo "Max Performance activated."
