@@ -6,3 +6,4 @@
 - Clipboard indicator
 - Gnome 4x UI Improvemetn
 - Search Light
+4. Không phải tip n trick nhưng power-profiles-daemon có vẻ như không có ở fedora

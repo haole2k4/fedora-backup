@@ -2,14 +2,6 @@
 
 echo "Switching to MAX PERFORMANCE mode..."
 
-# 1. Dừng hoàn toàn TLP để tránh can thiệp vào Scheduler
-sudo systemctl stop tlp
-sudo systemctl disable tlp
-
-# 2. Quản lý scx_lavd (Dừng bản cũ nếu đang chạy để tránh chồng chéo)
-sudo pkill -f scx_lavd
-sleep 1
-sudo scx_lavd --performance &! 
 
 # 2. (do đã gỡ scx_lavd nên 2 trên ko cần, ngoài ra bổ sung)
 sudo systemctl start mysqld

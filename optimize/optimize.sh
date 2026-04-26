@@ -31,3 +31,10 @@ sudo systemctl disable --now \
 # - Auto timezone
 # smartd là daemon giám sát sức khỏe ổ cứng/SSD dựa trên chuẩn S.M.A.R.T Gây disk wakeups Phá deep idle (C-state, PCIe ASPM)
 #->Làm pin tụt chậm nhưng đều
+
+
+# auto-cpufreq để tự động điều chỉnh tần số CPU dựa trên tải và nhiệt độ, giúp cân bằng hiệu năng và tiết kiệm pin
+git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+cd auto-cpufreq && sudo ./auto-cpufreq-installer
+sudo auto-cpufreq --install
+# Thắc mắc cái gì thì lên repo xem
