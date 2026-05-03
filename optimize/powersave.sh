@@ -13,6 +13,6 @@ gnome-extensions list | while read ext; do
 done
 
 # 4. Tắt các dịch vụ nặng nề
-sudo systemctl stop docker.service docker.socket
+sudo systemctl stop podman.service podman.socket
 
 echo "Power Save mode activated."

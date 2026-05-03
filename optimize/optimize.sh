@@ -20,6 +20,7 @@ sudo systemctl disable --now \
     geoclue.service \
     smartd.service \
 
+
 # bluetooth.service Nếu không dùng BT (tai nghe, chuột, bàn phím)
 # ModemManager.service Nếu không có 4G/5G modem
 # cups.service Nếu không in ấn 
@@ -31,6 +32,9 @@ sudo systemctl disable --now \
 # - Auto timezone
 # smartd là daemon giám sát sức khỏe ổ cứng/SSD dựa trên chuẩn S.M.A.R.T Gây disk wakeups Phá deep idle (C-state, PCIe ASPM)
 #->Làm pin tụt chậm nhưng đều
+sudo systemctl disable --now abrtd.service abrt-journal-core.service abrt-oops.service abrt-xorg.service
+# thêm 1 vài service dò lỗi và gửi, nhưng chủ thớt không cần nên tắt luôn cho nhẹ máy, nếu cần thì bật lại sau
+
 
 
 # auto-cpufreq để tự động điều chỉnh tần số CPU dựa trên tải và nhiệt độ, giúp cân bằng hiệu năng và tiết kiệm pin
