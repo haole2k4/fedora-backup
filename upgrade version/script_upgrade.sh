@@ -19,3 +19,40 @@ sudo dnf5 offline clean
 # xem tiếp ở https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/
 # docs thêm: https://fedoraproject.org/security/
 # tác giả làm biếng T.T
+
+# sau khi nâng cấp xong, chạy
+sudo dnf install rpmconf
+sudo rpmconf -a
+# Chú ý: nên chạy D trước, cảm thấy ổn thì Y
+
+# Sau đó cập nhật grub bootloader
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+# Lưu ý quan trọng: Đừng cố tìm file ở /boot/efi/EFI/fedora/grub.cfg. 
+# Trên Fedora hiện đại, file đó chỉ là một file "stub" trỏ về /boot/grub2/grub.cfg. 
+# Nếu bạn ghi đè trực tiếp vào file ở phân vùng EFI, 
+#bạn có thể làm hỏng khả năng tự động cập nhật của hệ thống trong tương lai.
+
+# chạy efibootmgr để kiểm tra và quản lý các mục khởi động EFI trên hệ thống của bạn.
+sudo dnf install efibootmgr
+sudo efibootmgr
+# thấy boot order có fedora là được
+
+# tải để loại bỏ các gói phần mềm đã lỗi thời hoặc không còn được hỗ trợ trên Fedora 44
+sudo dnf install remove-retired-packages
+remove-retired-packages
+
+# cài bộ giải cứu mới
+# đừng ngựa ngựa mà làm theo các bước khác, cách này ngon nhất cho zsh rồi
+sudo rm /boot/*rescue*
+sudo kernel-install add "$(uname -r)" "/lib/modules/$(uname -r)/vmlinuz"
+
+# có thể cài thêm này để tạo một môi trường cứu hộ (rescue environment) mới, giúp bạn khôi phục hệ thống nếu gặp sự cố sau khi nâng cấp.
+sudo dnf install dracut-config-rescue
+
+# clean mấy cái chữ ký trước đó
+sudo dnf install clean-rpm-gpg-pubkey
+sudo clean-rpm-gpg-pubkey
+
+# clean simplink cũ
+sudo dnf install symlinks
+sudo symlinks -r /usr | grep dangling
