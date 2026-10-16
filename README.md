@@ -29,17 +29,28 @@ Chạy **từng lệnh một** trong các file:
 
 ## 2. optimize/
 
-Chạy bằng `source`:
+### Dùng script bảo trì
+
+Copy script về thư mục home, cấp quyền chạy rồi chạy bằng `sudo`:
+
 ```bash
-source maintainance.sh   # Dọn cache, journal, TRIM
-source performance.sh    # Tối ưu hiệu năng
-source powersave.sh      # Tiết kiệm pin
+cp optimize/maintainance.sh ~/maintenance.sh
+chmod +x ~/maintenance.sh
+sudo ~/maintenance.sh
+```
+
+### Chuyển chế độ hiệu năng
+
+Chạy script bằng Zsh dưới tài khoản của bạn. Lệnh `systemctl` sẽ hỏi quyền quản trị khi cần:
+```bash
+zsh optimize/performance.sh    # Bật Docker và hiệu ứng GNOME
+zsh optimize/powersave.sh      # Dừng Docker và tắt hiệu ứng GNOME
 ```
 
 Chạy trực tiếp:
 ```bash
-bash optimize.sh
-bash resignfornewkernel.sh   # Ký lại module sau update kernel
+bash optimize/optimize.sh
+bash optimize/resignfornewkernel.sh   # Ký lại module sau update kernel
 ```
 
 Xem thêm: `tipntrick.md`
