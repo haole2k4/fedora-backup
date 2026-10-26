@@ -6,9 +6,17 @@ DUMP_FILE="${SCRIPT_DIR}/gnome-settings.dconf"
 
 case "${1:-backup}" in
   backup)
-    echo "[INFO] Đang trích xuất cấu hình GNOME (/org/gnome/) ra ${DUMP_FILE}..."
-    dconf dump /org/gnome/ > "${DUMP_FILE}"
-    echo "[OK] Đã lưu cấu hình GNOME thành công (không ảnh hưởng các Wayland compositor khác)."
+    echo "[INFO] Đang trích xuất và lọc dữ liệu nhạy cảm từ GNOME (/org/gnome/)..."
+    dconf dump /org/gnome/ | awk '
+      /^\[/ {
+        skip = ($0 ~ /^\[(maps|nm-applet\/|portal\/filechooser\/|TextEditor|control-center|software)/)
+      }
+      !skip {
+        if ($0 ~ /^storage-main=/) next
+        print
+      }
+    ' > "${DUMP_FILE}"
+    echo "[OK] Đã lưu cấu hình GNOME sạch (đã loại bỏ tọa độ GPS, lịch sử thư mục, Wi-Fi UUID & mã ổ cứng) vào ${DUMP_FILE}."
     ;;
   restore)
     if [ ! -f "${DUMP_FILE}" ]; then
