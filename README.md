@@ -1,14 +1,13 @@
-# Fedora Dotfiles & System Scripts
+# Fedora System Setup & GNOME Backup
 
-Kho lưu trữ cấu hình cá nhân (**GNU Stow**) và bộ công cụ tối ưu hóa hệ thống cho **Fedora Linux**.
+Bộ công cụ thiết lập sau khi cài mới, tối ưu hóa hệ thống và sao lưu cấu hình **GNOME** cho **Fedora Linux**.
 
 ## Cấu trúc thư mục
 
 ```text
-fedora-backup/
-├── Makefile                     # Tự động hóa stow dotfiles, tối ưu máy & backup GNOME
+fedora-setup/
+├── Makefile                     # Tự động hóa tối ưu máy & backup/restore GNOME
 ├── .gitignore                   # Chặn file rác, cache, history và secret/token
-├── .stow-local-ignore           # Ngăn GNU Stow symlink nhầm thư mục hệ thống
 │
 ├── system/                      # [HỆ THỐNG] Các script cấp hệ thống (cần sudo)
 │   ├── after-install/           # Thiết lập sau khi cài mới Fedora (dnf.conf, codec, driver...)
@@ -16,37 +15,20 @@ fedora-backup/
 │   ├── upgrade/                 # Quy trình nâng cấp phiên bản Fedora (system-upgrade)
 │   └── setup-apps/              # Script cài đặt Niri, Ollama (Open WebUI), UxPlay, mẹo MPV
 │
-├── gnome/                       # [GNOME] Sao lưu/khôi phục riêng nhánh /org/gnome/
-│   └── backup-gnome.sh          # Tránh xung đột với các Wayland compositor khác (Niri/DMS)
-│
-├── zsh/                         # [STOW] ~/.zshrc (Zinit, Starship, Git Worktree helpers)
-├── ghostty/                     # [STOW] ~/.config/ghostty/ (config & themes)
-├── starship/                    # [STOW] ~/.config/starship.toml
-├── tmux/                        # [STOW] ~/.tmux.conf
-├── git/                         # [STOW] ~/.gitconfig
-├── mpv/                         # [STOW] ~/.config/mpv/ (mpv.conf & uosc.conf)
-├── vim/                         # [STOW] ~/.vimrc
-└── nvim/                        # [STOW] ~/.config/nvim/
+└── gnome/                       # [GNOME] Sao lưu/khôi phục riêng nhánh /org/gnome/
+    ├── backup-gnome.sh          # Tránh xung đột với các Wayland compositor khác (Niri/DMS)
+    └── gnome-settings.dconf     # Bản sao lưu cấu hình dconf của GNOME
 ```
 
 ---
 
-## 1. Quản lý Dotfiles bằng GNU Stow (Thay thế `cp` thủ công)
+## 1. Sau khi cài mới: Đồng bộ Dotfiles
 
-Không cần copy từng file hay đổi tên dự phòng. Mọi chỉnh sửa trên `~/.zshrc`, `~/.config/ghostty/config`, v.v. sẽ trực tiếp cập nhật vào repo thông qua symlink.
+Các cấu hình cá nhân (`zsh`, `ghostty`, `starship`, `tmux`, `git`, `mpv`, `vim`, `nvim`) đã được tách sang repo riêng [`haole2k4/dotfiles`](https://github.com/haole2k4/dotfiles). Sau khi cài mới máy, clone repo dotfiles rồi chạy `make stow`:
 
 ```bash
-# Cài đặt GNU Stow (nếu chưa có)
-sudo dnf install stow -y
-
-# Symlink toàn bộ các module (nếu máy đang có sẵn file thật ở ~/, dùng make adopt)
-make adopt
-
-# Hoặc làm mới (re-stow) toàn bộ symlink
-make stow
-
-# Nếu chỉ muốn bật lẻ 1 module bất kỳ:
-stow -v -R -t ~ zsh ghostty
+git clone https://github.com/haole2k4/dotfiles ~/dotfiles
+make -C ~/dotfiles stow
 ```
 
 ---
@@ -67,13 +49,13 @@ make gnome-restore   # Nạp lại cấu hình từ gnome/gnome-settings.dconf
 ### Chạy nhanh qua `Makefile`:
 ```bash
 make optimize        # Dọn cache dnf5, cập nhật gói, dọn journalctl (7 ngày) & fstrim SSD
-make performance     # Bật Docker & hiệu ứng/extension GNOME
-make powersave       # Tắt Docker & hiệu ứng/extension GNOME để tiết kiệm pin
+make performance     # Bật Podman/Docker & hiệu ứng/extension GNOME
+make powersave       # Tắt Podman/Docker & hiệu ứng/extension GNOME để tiết kiệm pin
 ```
 
 ### Thiết lập sau khi cài mới (`system/after-install/`):
 - **Cấu hình DNF:** `sudo cp system/after-install/dnf.conf /etc/dnf/dnf.conf`
-- **Cài đặt cơ bản:** Xem và chạy từng bước trong [`system/after-install/mustdo.sh`](system/after-install/mustdo.sh) (RPM Fusion, Multimedia Codecs, NVIDIA `akmod-nvidia`, `tlp`...).
+- **Cài đặt cơ bản:** Xem và chạy từng bước trong [`system/after-install/mustdo.sh`](system/after-install/mustdo.sh) (RPM Fusion, Multimedia Codecs, NVIDIA `akmod-nvidia`, `tlp`, clone `dotfiles`...).
 - **Sửa tốc độ cuộn Touchpad:** Xem [`system/after-install/touchpadfix.sh`](system/after-install/touchpadfix.sh).
 
 ### Quản lý Kernel & Dịch vụ nền (`system/optimize/`):

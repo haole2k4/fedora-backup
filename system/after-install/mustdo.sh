@@ -1,3 +1,7 @@
+# ============================================================
+# PHẦN 1: CẬP NHẬT HỆ THỐNG & FIRMWARE (TRƯỚC KHI REBOOT)
+# (Lưu ý: Đây là danh sách lệnh chạy tay từng bước, không chạy một lèo)
+# ============================================================
 sudo dnf update
 
 sudo fwupdmgr refresh --force
@@ -5,6 +9,9 @@ sudo fwupdmgr update
 #xong 2 lenh tren thi 
 sudo reboot now
 
+# ============================================================
+# PHẦN 2: CÀI ĐẶT GÓI, DRIVER & DOTFILES (SAU KHI REBOOT)
+# ============================================================
 sudo dnf install dnf5 dnf5-plugins #use dnf5
 
 sudo dnf install http://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
@@ -34,3 +41,6 @@ sudo dnf install akmod-nvidia
 sudo dnf5 install tlp
 sudo systemctl enable tlp
 sudo systemctl start tlp
+
+#dotfiles (clone repo dotfiles riêng & tạo symlink bằng GNU Stow)
+# git clone https://github.com/haole2k4/dotfiles ~/dotfiles && make -C ~/dotfiles stow
